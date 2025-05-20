@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Order } from '@domain/entities/order.entity';
-import { OrderRepository } from '@domain/repositories/order.repository';
+import { OrderRepository } from '@infrastructure/repositories/order.repository';
 
 @Injectable()
 export class CreateOrderUseCase {

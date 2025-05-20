@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Order } from '@domain/entities/order.entity';
-import { OrderRepository } from '@domain/repositories/order.repository';
+import { IOrderRepository } from '@domain/repositories/order.repository.interface';
 import { PrismaService } from '@infrastructure/database/prisma.service';
 
 @Injectable()
-export class PrismaOrderRepository extends OrderRepository {
-  constructor(private readonly prisma: PrismaService) {
-    super();
-  }
+export class OrderRepository implements IOrderRepository {
+  constructor(private readonly prisma: PrismaService) {}
 
   async findById(id: string): Promise<Order | null> {
     const order = await this.prisma.order.findUnique({

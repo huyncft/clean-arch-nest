@@ -18,7 +18,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
-  console.log('DATABASE_URL from process.env:', process.env.DATABASE_URL);
+
   // Security
   app.use(helmet());
 
@@ -39,5 +39,6 @@ async function bootstrap() {
   app.enableCors();
 
   await app.listen(3302);
+  console.log('app running in port', 3302);
 }
 bootstrap();
