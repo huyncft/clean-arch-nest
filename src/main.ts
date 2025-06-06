@@ -1,6 +1,5 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
@@ -9,6 +8,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
+
+  app.setGlobalPrefix('v1');
 
   // Global pipes
   app.useGlobalPipes(
@@ -25,20 +26,10 @@ async function bootstrap() {
   // Logger
   app.useLogger(app.get(Logger));
 
-  // Swagger
-  const config = new DocumentBuilder()
-    .setTitle('Clean Architecture API')
-    .setDescription('The Clean Architecture API description')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
-
   // CORS
   app.enableCors();
 
-  await app.listen(3302);
-  console.log('app running in port', 3302);
+  await app.listen(process.env.PORT || 3302);
+  console.log('🚀 App running in port 🔥', process.env.PORT);
 }
 bootstrap();
